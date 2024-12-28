@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Libritos</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sora">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7207324369004968"
+     crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: 'Sora', sans-serif;
+            margin: 20px;
+        }
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+        .file-input-wrapper input[type="file"] {
+            font-size: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-10">
+        <h1 class="text-4xl font-bold text-center mb-6">Libritos</h1>
+        <div class="flex items-center justify-center w-full">
+            <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-500 border-dashed rounded-lg cursor-pointer bg-gray-200 hover:bg-gray-300">
+                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                    <svg id="upload-icon" class="w-14 h-14 mb-6 text-gray-700" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                    </svg>
+                    <p id="uploadText" class="font-bold pl-4 pr-4 mb-2 text-xl text-gray-700 text-center">Da click o suelta para subir.</p>
+                    <p id="uploadMax" class="text-lg text-gray-700 text-center">Solo PDFs (Máximo 1GB).</p>
+                </div>
+                <input id="dropzone-file" type="file" class="hidden" accept="application/pdf" />
+            </label>
+        </div>
+        <div class="flex justify-center mt-4">
+            <button id="downloadButton" class="btn btn-primary bg-gray-400 text-white text-xl px-8 py-2 rounded cursor-not-allowed font-bold" disabled>Descargar</button>
+        </div>
+    </div>
+
+    <!-- Include pdf-lib library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <!-- Include downloadjs library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/downloadjs/1.4.8/download.min.js"></script>
+
+    <script src="script.js"></script>
+</body>
+</html>
