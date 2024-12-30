@@ -4,14 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Libritos</title>
+    <meta name="description" content="Crea y descarga libritos en libritos.arias.pw. Sube tu PDF y obten un librito listo para imprimir.">
     <link rel="icon" href="book.png" type="image/x-icon">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Libritos</title>
-    <meta name="description" content="Crea y descarga libritos en libritos.arias.pw. Sube tu PDF y obtenga un librito listo para imprimir.">
-    <link rel="icon" href="book.png" type="image/x-icon">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lexend Deca">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Lexend Deca', sans-serif;
@@ -48,6 +45,8 @@
             opacity: 1;
         }
     </style>
+    <link rel="preload" href="https://cdn.tailwindcss.com" as="script">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 min-h-screen">
     <div class="container mx-auto p-10">
@@ -92,10 +91,37 @@
     </div>
 
     <!-- Include pdf-lib library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js" defer></script>
     <!-- Include downloadjs library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/downloadjs/1.4.8/download.min.js"></script>
 
     <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dropzoneLabel = document.getElementById('dropzone-label');
+            const dropzoneFileInput = document.getElementById('dropzone-file');
+
+            dropzoneLabel.addEventListener('dragover', (event) => {
+                event.preventDefault();
+                dropzoneLabel.classList.add('bg-gray-300', 'border-blue-500');
+            });
+
+            dropzoneLabel.addEventListener('dragleave', () => {
+                dropzoneLabel.classList.remove('bg-gray-300', 'border-blue-500');
+            });
+
+            dropzoneLabel.addEventListener('drop', (event) => {
+                event.preventDefault();
+                dropzoneLabel.classList.remove('bg-gray-300', 'border-blue-500');
+                const files = event.dataTransfer.files;
+                if (files.length > 0) {
+                    dropzoneFileInput.files = files;
+                    // Trigger change event to handle the file upload
+                    const changeEvent = new Event('change');
+                    dropzoneFileInput.dispatchEvent(changeEvent);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
