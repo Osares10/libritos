@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://libritos.arias.pw/sitemap.xml

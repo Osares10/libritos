@@ -4,10 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Libritos</title>
+    <meta name="description" content="Crea y descarga libritos en libritos.arias.pw. Sube tu PDF y obten un librito listo para imprimir.">
     <link rel="icon" href="book.png" type="image/x-icon">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lexend Deca">
-    <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        @font-face {
+            font-family: 'Lexend Deca';
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: url('https://fonts.gstatic.com/s/lexenddeca/v8/K2FyfZ0FOGxH0Ff1eW3zRz8.woff2') format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
         body {
             font-family: 'Lexend Deca', sans-serif;
             margin: 20px;
@@ -43,6 +50,8 @@
             opacity: 1;
         }
     </style>
+    <link rel="preload" href="https://cdn.tailwindcss.com" as="script">
+    <script defer src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 min-h-screen">
     <div class="container mx-auto p-10">
@@ -67,7 +76,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-5 md:grid-cols-3 gap-4 mt-6">
             <div class="image-container">
                 <a href="examples/Rosario y Cantos Navideños - (libritos.arias.pw).pdf" download>
-                    <img class="h-auto max-w-full rounded-lg" src="examples/Rosario y Cantos Navideños.png" alt="PDF de ejemplo, Rosario y Cantos Navideños">
+                    <img class="h-auto max-w-full rounded-lg" src="examples/Rosario y Cantos Navideños.webp" alt="PDF de ejemplo, Rosario y Cantos Navideños">
                     <svg class="download-icon w-20 h-20 text-gray-100" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 18">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 1v11m0 0 4-4m-4 4L4 8m11 4v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3"/>
                     </svg>
@@ -75,7 +84,7 @@
             </div>
             <div class="image-container">
                 <a href="examples/Via Crucis Biblico Franciscano - (libritos.arias.pw).pdf" download>
-                    <img class="h-auto max-w-full rounded-lg" src="examples/Via Crucis Biblico Franciscano.png" alt="PDF de ejemplo, Via Crucis Biblico Franciscano">
+                    <img class="h-auto max-w-full rounded-lg" src="examples/Via Crucis Biblico Franciscano.webp" alt="PDF de ejemplo, Via Crucis Biblico Franciscano">
                     <svg class="download-icon w-20 h-20 text-gray-100" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 18">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 1v11m0 0 4-4m-4 4L4 8m11 4v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3"/>
                     </svg>
