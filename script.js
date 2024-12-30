@@ -1,3 +1,33 @@
+const loadPdf = async (url) => {
+    const response = await fetch(url);
+    const arrayBuffer = await response.arrayBuffer();
+    return await PDFLib.PDFDocument.load(arrayBuffer);
+};
+document.addEventListener('DOMContentLoaded', () => {
+    const dropzoneLabel = document.getElementById('dropzone-label');
+    const dropzoneFileInput = document.getElementById('dropzone-file');
+
+    dropzoneLabel.addEventListener('dragover', (event) => {
+        event.preventDefault();
+        dropzoneLabel.classList.add('bg-gray-300', 'border-blue-500');
+    });
+
+    dropzoneLabel.addEventListener('dragleave', () => {
+        dropzoneLabel.classList.remove('bg-gray-300', 'border-blue-500');
+    });
+
+    dropzoneLabel.addEventListener('drop', (event) => {
+        event.preventDefault();
+        dropzoneLabel.classList.remove('bg-gray-300', 'border-blue-500');
+        const files = event.dataTransfer.files;
+        if (files.length > 0) {
+            dropzoneFileInput.files = files;
+            // Trigger change event to handle the file upload
+            const changeEvent = new Event('change');
+            dropzoneFileInput.dispatchEvent(changeEvent);
+        }
+    });
+});
 document.getElementById('dropzone-file').addEventListener('change', async function(event) {
     try {
         const fileInput = event.target;
@@ -55,6 +85,21 @@ document.getElementById('dropzone-file').addEventListener('change', async functi
                     width: width,
                     height: height,
                 });
+                const qrPdfDoc = await loadPdf('qr.pdf');
+                const [qrPage] = await newPdfDoc.copyPages(qrPdfDoc, [0]);
+                const embeddedQrPage = await newPdfDoc.embedPage(qrPage);
+                newFirstPage.drawPage(embeddedQrPage, {
+                    x: 0,
+                    y: height,
+                    width: width,
+                    height: height,
+                });
+                newFirstPage.drawPage(embeddedQrPage, {
+                    x: 0,
+                    y: 0,
+                    width: width,
+                    height: height,
+                });
                 newPdfDoc.addPage([width * 2, height * 2]);
 
                 if (numPages > 1) {
@@ -93,6 +138,21 @@ document.getElementById('dropzone-file').addEventListener('change', async functi
                 });
                 newFirstPage.drawPage(embeddedPage1, {
                     x: width,
+                    y: 0,
+                    width: width,
+                    height: height,
+                });
+                const qrPdfDoc = await loadPdf('qr.pdf');
+                const [qrPage] = await newPdfDoc.copyPages(qrPdfDoc, [0]);
+                const embeddedQrPage = await newPdfDoc.embedPage(qrPage);
+                newFirstPage.drawPage(embeddedQrPage, {
+                    x: 0,
+                    y: height,
+                    width: width,
+                    height: height,
+                });
+                newFirstPage.drawPage(embeddedQrPage, {
+                    x: 0,
                     y: 0,
                     width: width,
                     height: height,
@@ -147,6 +207,21 @@ document.getElementById('dropzone-file').addEventListener('change', async functi
                 });
                 newFirstPage.drawPage(embeddedPage1, {
                     x: width,
+                    y: 0,
+                    width: width,
+                    height: height,
+                });
+                const qrPdfDoc = await loadPdf('qr.pdf');
+                const [qrPage] = await newPdfDoc.copyPages(qrPdfDoc, [0]);
+                const embeddedQrPage = await newPdfDoc.embedPage(qrPage);
+                newFirstPage.drawPage(embeddedQrPage, {
+                    x: 0,
+                    y: height,
+                    width: width,
+                    height: height,
+                });
+                newFirstPage.drawPage(embeddedQrPage, {
+                    x: 0,
                     y: 0,
                     width: width,
                     height: height,
@@ -232,6 +307,34 @@ document.getElementById('dropzone-file').addEventListener('change', async functi
                     height: height,
                 });
                 const embeddedPage3 = await newPdfDoc.embedPage(secondPage); // Embed the second page
+
+                // Calculate the center position for the text
+                const font = await pdfDoc.embedFont(PDFLib.StandardFonts.Courier);
+                const text = 'CREA y DESCARGA libritos en libritos.arias.pw';
+                const fontSize = 20;
+                const textWidth = font.widthOfTextAtSize(text, fontSize);
+                const textHeight = fontSize;
+                const centerX = (newFirstPage.getWidth() - (textHeight)) / 2;
+                const centerY = ((newFirstPage.getHeight() / 2) + (textWidth / 3));
+
+                newFirstPage.drawText(text, {
+                    x: centerX,
+                    y: centerY,
+                    size: fontSize,
+                    font: font,
+                    color: PDFLib.rgb(0, 0, 0), // Black color
+                    rotate: PDFLib.degrees(90),
+                });
+                const newCenterY = (textWidth / 3);
+                newFirstPage.drawText(text, {
+                    x: centerX,
+                    y: newCenterY,
+                    size: fontSize,
+                    font: font,
+                    color: PDFLib.rgb(0, 0, 0), // Black color
+                    rotate: PDFLib.degrees(90),
+                });
+
                 const newSecondPage = newPdfDoc.addPage([width * 2, height * 2]); // Add a new page
                 newSecondPage.drawPage(embeddedPage3, {
                     x: 0,
@@ -297,15 +400,32 @@ document.getElementById('dropzone-file').addEventListener('change', async functi
             uploadMax.innerText = 'Para cambiar da click o arrastra un nuevo archivo.';
 
             const downloadButton = document.getElementById('downloadButton');
-            downloadButton.disabled = false;
-            downloadButton.classList.remove('bg-gray-500', 'cursor-not-allowed');
-            downloadButton.classList.add('bg-blue-500', 'hover:bg-blue-700');
-            downloadButton.style.display = 'block';
-            downloadButton.onclick = () => {
-                const originalFileName = file.name.replace(/\.[^/.]+$/, ""); // Remove file extension
-                const newFileName = `${originalFileName} - (libritos.arias.pw) .pdf`;
-                download(pdfBytes, newFileName, 'application/pdf');
-            };
+            const spinnerButton = document.createElement('button');
+            spinnerButton.disabled = true;
+            spinnerButton.type = 'button';
+            spinnerButton.className = 'btn btn-primary bg-blue-300 text-white text-xl px-8 py-2 rounded cursor-not-allowed font-bold';
+            spinnerButton.innerHTML = `
+                <svg aria-hidden="true" role="status" class="inline w-4 h-4 me-3 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>
+                    <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>
+                </svg>
+                Cargando...
+            `;
+            
+            downloadButton.parentNode.replaceChild(spinnerButton, downloadButton);
+            
+            setTimeout(() => {
+                spinnerButton.parentNode.replaceChild(downloadButton, spinnerButton);
+                downloadButton.disabled = false;
+                downloadButton.classList.remove('bg-gray-400', 'cursor-not-allowed');
+                downloadButton.classList.add('bg-blue-500', 'hover:bg-blue-700');
+                downloadButton.style.display = 'block';
+                downloadButton.onclick = () => {
+                    const originalFileName = file.name.replace(/\.[^/.]+$/, ""); // Remove file extension
+                    const newFileName = `${originalFileName} - (libritos.arias.pw).pdf`;
+                    download(pdfBytes, newFileName, 'application/pdf');
+                };
+            }, 4000);
 
             // Change the upload icon to a PDF icon
             const uploadIcon = document.getElementById('upload-icon');

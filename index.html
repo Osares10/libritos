@@ -4,13 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Libritos</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sora">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lexend Deca">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7207324369004968"
-     crossorigin="anonymous"></script> <!-- Google AdSense -->
     <style>
         body {
-            font-family: 'Sora', sans-serif;
+            font-family: 'Lexend Deca', sans-serif;
             margin: 20px;
         }
         .file-input-wrapper {
@@ -25,19 +23,37 @@
             top: 0;
             opacity: 0;
         }
+        .image-container {
+            position: relative;
+            display: inline-block;
+        }
+        .image-container img {
+            display: block;
+        }
+        .image-container .download-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .image-container:hover .download-icon {
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen">
     <div class="container mx-auto p-10">
         <h1 class="text-4xl font-bold text-center mb-6 ">Libritos</h1>
         <div class="flex items-center justify-center w-full">
-            <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-500 border-dashed rounded-lg cursor-pointer bg-gray-200 hover:bg-gray-300">
+            <label for="dropzone-file" id="dropzone-label" class="flex flex-col items-center justify-center w-full h-64 border-4 border-gray-500 border-dashed rounded-lg cursor-pointer bg-gray-200 hover:bg-gray-300">
                 <div class="flex flex-col items-center justify-center pt-5 pb-6">
                     <svg id="upload-icon" class="w-14 h-14 mb-6 text-gray-700" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
                     </svg>
                     <p id="uploadText" class="font-bold pl-4 pr-4 mb-2 text-xl text-gray-700 text-center">Da click o suelta para subir.</p>
-                    <p id="uploadMax" class="text-lg text-gray-700 text-center">Solo PDFs (Máximo 1GB).</p>
+                    <p id="uploadMax" class="text-lg text-gray-700 text-center">Solo PDFs (Máximo 30 MB).</p>
                 </div>
                 <input id="dropzone-file" type="file" class="hidden" accept="application/pdf" />
             </label>
@@ -47,46 +63,48 @@
         </div>
         <!-- Collection -->
         <p class="mt-12 text-center">Si quieres que tu librito aparezca aquí, envíame un correo a <a target="_blank" href="mailto:libritos@arias.pw" class="text-blue-500">libritos@arias.pw</a>.</p>
-        <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mt-6">
-            <div>
+        <div class="grid grid-cols-1 lg:grid-cols-5 md:grid-cols-3 gap-4 mt-6">
+            <div class="image-container">
                 <a href="examples/Rosario y Cantos Navideños.pdf" download>
                     <img class="h-auto max-w-full rounded-lg" src="examples/Rosario y Cantos Navideños.png" alt="PDF de ejemplo, Rosario y Cantos Navideños">
+                    <svg class="download-icon w-20 h-20 text-gray-100" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 18">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 1v11m0 0 4-4m-4 4L4 8m11 4v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3"/>
+                    </svg>
                 </a>
             </div>
-            <div>
+            <div class="image-container">
                 <a href="examples/Rosario y Cantos Navideños.pdf" download>
                     <img class="h-auto max-w-full rounded-lg" src="examples/Rosario y Cantos Navideños.png" alt="PDF de ejemplo, Rosario y Cantos Navideños">
+                    <svg class="download-icon w-20 h-20 text-gray-100" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 18">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 1v11m0 0 4-4m-4 4L4 8m11 4v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3"/>
+                    </svg>
                 </a>
             </div>
-            <div>
+            <div class="image-container">
                 <a href="examples/Rosario y Cantos Navideños.pdf" download>
                     <img class="h-auto max-w-full rounded-lg" src="examples/Rosario y Cantos Navideños.png" alt="PDF de ejemplo, Rosario y Cantos Navideños">
+                    <svg class="download-icon w-20 h-20 text-gray-100" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 18">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 1v11m0 0 4-4m-4 4L4 8m11 4v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3"/>
+                    </svg>
                 </a>
             </div>
-            <div>
+            <div class="image-container">
                 <a href="examples/Rosario y Cantos Navideños.pdf" download>
                     <img class="h-auto max-w-full rounded-lg" src="examples/Rosario y Cantos Navideños.png" alt="PDF de ejemplo, Rosario y Cantos Navideños">
+                    <svg class="download-icon w-20 h-20 text-gray-100" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 18">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 1v11m0 0 4-4m-4 4L4 8m11 4v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3"/>
+                    </svg>
                 </a>
             </div>
-            <div>
+            <div class="image-container">
                 <a href="examples/Rosario y Cantos Navideños.pdf" download>
                     <img class="h-auto max-w-full rounded-lg" src="examples/Rosario y Cantos Navideños.png" alt="PDF de ejemplo, Rosario y Cantos Navideños">
+                    <svg class="download-icon w-20 h-20 text-gray-100" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 18">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 1v11m0 0 4-4m-4 4L4 8m11 4v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3"/>
+                    </svg>
                 </a>
             </div>
         </div>
-        <!-- Bottom Ad -->
-        <div class="mt-6">
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7207324369004968"
-             crossorigin="anonymous"></script>
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-7207324369004968"
-                 data-ad-slot="3968258104"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
         </div>
         <p class="text-center">Página creada por <a target="_blank" href="https://arias.pw" class="text-blue-500">Oswaldo Arias</a>. Código fuente disponible en <a target="_blank" href="https://github.com/Osares10/libritos" class="text-blue-500">GitHub</a>.</p>
     </div>
