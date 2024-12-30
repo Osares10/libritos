@@ -3,6 +3,11 @@ const loadPdf = async (url) => {
     const arrayBuffer = await response.arrayBuffer();
     return await PDFLib.PDFDocument.load(arrayBuffer);
 };
+const loadPngImage = async (url) => {
+    const response = await fetch(url);
+    const arrayBuffer = await response.arrayBuffer();
+    return arrayBuffer;
+};
 document.addEventListener('DOMContentLoaded', () => {
     const dropzoneLabel = document.getElementById('dropzone-label');
     const dropzoneFileInput = document.getElementById('dropzone-file');
@@ -308,30 +313,30 @@ document.getElementById('dropzone-file').addEventListener('change', async functi
                 });
                 const embeddedPage3 = await newPdfDoc.embedPage(secondPage); // Embed the second page
 
-                // Calculate the center position for the text
-                const font = await pdfDoc.embedFont(PDFLib.StandardFonts.Courier);
-                const text = 'CREA y DESCARGA libritos en libritos.arias.pw';
-                const fontSize = 20;
-                const textWidth = font.widthOfTextAtSize(text, fontSize);
-                const textHeight = fontSize;
-                const centerX = (newFirstPage.getWidth() - (textHeight)) / 2;
-                const centerY = ((newFirstPage.getHeight() / 2) + (textWidth / 3));
+                // Load the PNG image
+                const pngUrl = 'url.png'; // Replace with the path to your PNG image file
+                const pngBytes = await loadPngImage(pngUrl);
+                const pngImage = await newPdfDoc.embedPng(pngBytes);
 
-                newFirstPage.drawText(text, {
+                // Calculate the position to draw the image
+                const pngDims = pngImage.scale(0.6); // Scale the image as needed
+                const centerX = (firstPage.getWidth() + (pngDims.height / 2));
+                const centerY = (firstPage.getHeight() - pngDims.width) / 2;
+
+                // Draw the PNG image on the first page
+                newFirstPage.drawImage(pngImage, {
                     x: centerX,
                     y: centerY,
-                    size: fontSize,
-                    font: font,
-                    color: PDFLib.rgb(0, 0, 0), // Black color
+                    width: pngDims.width,
+                    height: pngDims.height,
                     rotate: PDFLib.degrees(90),
                 });
-                const newCenterY = (textWidth / 3);
-                newFirstPage.drawText(text, {
+                const newCenterY = (firstPage.getHeight()) + (firstPage.getHeight() - pngDims.width) / 2;
+                newFirstPage.drawImage(pngImage, {
                     x: centerX,
                     y: newCenterY,
-                    size: fontSize,
-                    font: font,
-                    color: PDFLib.rgb(0, 0, 0), // Black color
+                    width: pngDims.width,
+                    height: pngDims.height,
                     rotate: PDFLib.degrees(90),
                 });
 
