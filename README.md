@@ -2,6 +2,8 @@
 
 Welcome to the code repository for [Libritos](https://libritos.arias.pw), also available at [libritos.pages.dev](https://libritos.pages.dev).
 
+![libritos](libritos.png)
+
 ## Overview
 
 Libritos is a JavaScript-based tool designed to generate book-sized PDFs from full-sized PDFs. The generated PDFs can be cut in half and bound to create small books. This project leverages the `pdf-lib` and `downloadjs` libraries to achieve its functionality.
